@@ -10,7 +10,8 @@ new Vue({
 			{ id: 4, title: 'Item 4' },
 			{ id: 5, title: 'Item 5' }
 		],
-		cart: []
+		cart: [],
+		search: ''
 	},
 	methods: {
 		addItem: function(index) {
@@ -49,6 +50,9 @@ new Vue({
 					}
 				}
 			}
+		},
+		onSubmit: function() {
+			console.log(this.search);
 		}
 	},
 
