@@ -6,8 +6,10 @@ new Vue({
 		total: 0,
 		items: [],
 		cart: [],
-		search: '',
-		lastSearch: ''
+		search: 'imgur',
+		lastSearch: '',
+		loading: false,
+		price: PRICE
 	},
 	methods: {
 		addItem: function(index) {
@@ -48,11 +50,14 @@ new Vue({
 			}
 		},
 		onSubmit: function() {
+			this.items = [];
+			this.loading = true;
 			this.$http
 				.get('/search/'.concat(this.search))
 				.then(function(res) {
 					this.items = res.data;
 					this.lastSearch = this.search;
+					this.loading = false;
 				});
 		}
 	},
@@ -62,6 +67,10 @@ new Vue({
 			return '$'.concat(price.toFixed(2));
 		}
 
+	},
+
+	mounted: function() {
+		this.onSubmit();
 	}
 
 })
