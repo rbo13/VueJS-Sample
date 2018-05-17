@@ -1,17 +1,13 @@
 var PRICE = 9.99
+
 new Vue({
 	el: '#app',
 	data: {
 		total: 0,
-		items: [
-			{ id: 1, title: 'Item 1' },
-			{ id: 2, title: 'Item 2' },
-			{ id: 3, title: 'Item 3' },
-			{ id: 4, title: 'Item 4' },
-			{ id: 5, title: 'Item 5' }
-		],
+		items: [],
 		cart: [],
-		search: ''
+		search: '',
+		lastSearch: ''
 	},
 	methods: {
 		addItem: function(index) {
@@ -52,7 +48,12 @@ new Vue({
 			}
 		},
 		onSubmit: function() {
-			console.log(this.search);
+			this.$http
+				.get('/search/'.concat(this.search))
+				.then(function(res) {
+					this.items = res.data;
+					this.lastSearch = this.search;
+				});
 		}
 	},
 
