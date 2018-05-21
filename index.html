@@ -28,7 +28,7 @@
 						Loading...
 					</div>
 					<div class="search-results" v-else>
-							Found {{ items.length }} results for search term {{ lastSearch }}.
+            Found {{ items.length }} of {{results.length}} results for search term {{ lastSearch }}.
 					</div>
 					<div class="product" v-for="(item, index) in items">
 
@@ -47,8 +47,9 @@
 						</div>
 
 					</div>
+          <div id="product-list-bottom"></div>
 				</div>
-        <div class="cart">
+                <div class="cart">
             <h2>Shopping Cart</h2>
             <transition-group name="fade" tag="ul">
               <li class="cart-item" v-for="item in cart" :key="item.id">
@@ -74,6 +75,7 @@
 <script src="/reload/reload.js"></script>
 <script src="node_modules/vue/dist/vue.min.js"></script>
 <script src="node_modules/vue-resource/dist/vue-resource.min.js"></script>
+<script src="node_modules/scrollmonitor/scrollMonitor.js"></script>
 <script type="text/javascript" src="public/script.js"></script>
 
 </body>

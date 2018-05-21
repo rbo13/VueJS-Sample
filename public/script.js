@@ -1,10 +1,12 @@
-var PRICE = 9.99
+var PRICE = 9.99;
+var RESULTS_PER_QUERY = 10;
 
 new Vue({
 	el: '#app',
 	data: {
 		total: 0,
 		items: [],
+    results: [],
 		cart: [],
 		search: 'imgur',
 		lastSearch: '',
@@ -12,6 +14,12 @@ new Vue({
 		price: PRICE
 	},
 	methods: {
+    appendItems: function() {
+      if (this.items.length < this.results.length) {
+        var append = this.results.slice(this.items.length, this.items.length + RESULTS_PER_QUERY);
+        this.items = this.items.concat(append);
+      }
+    },
 		addItem: function(index) {
 			// this.total += this.items[index].price;
 			this.total += PRICE; 
@@ -55,8 +63,9 @@ new Vue({
 			this.$http
 				.get('/search/'.concat(this.search))
 				.then(function(res) {
-					this.items = res.data;
+          this.results = res.data;
 					this.lastSearch = this.search;
+          this.appendItems();
 					this.loading = false;
 				});
 		}
@@ -71,6 +80,14 @@ new Vue({
 
 	mounted: function() {
 		this.onSubmit();
+    const vm = this;
+
+    var elem = document.getElementById('product-list-bottom');
+    var watcher = scrollMonitor.create(elem);
+    watcher.enterViewport(() => {
+      vm.appendItems();
+    });
+
 	}
 
-})
+});
