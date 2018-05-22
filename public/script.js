@@ -11,7 +11,8 @@ new Vue({
 		search: 'imgur',
 		lastSearch: '',
 		loading: false,
-		price: PRICE
+		price: PRICE,
+    timeElapsed: 0,
 	},
   computed: {
     noMoreItems: function() {
@@ -66,7 +67,8 @@ new Vue({
       if (!this.search) {
         return;
       }
-			this.items = [];
+		  var started = Date.now();	
+      this.items = [];
 			this.loading = true;
 			this.$http
 				.get('/search/'.concat(this.search))
@@ -76,6 +78,7 @@ new Vue({
           this.appendItems();
 					this.loading = false;
 				});
+      this.timeElapsed = Date.now() - started;
 		}
 	},
 

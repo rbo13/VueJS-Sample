@@ -28,7 +28,7 @@
 						Loading...
 					</div>
 					<div class="search-results" v-else>
-            Found {{ items.length }} of {{results.length}} results for search term {{ lastSearch }}.
+            Found {{ items.length }} of {{results.length}} results for search term <strong>{{ lastSearch }}</strong> ({{ timeElapsed }}s).
 					</div>
 					<div class="product" v-for="(item, index) in items">
 
